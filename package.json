@@ -1,0 +1,47 @@
+{
+  "name": "ministeriolouvor-interface",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start -p $PORT",
+    "lint": "next lint",
+    "build:css": "postcss src/styles/tailwind.css -o src/styles/main.css",
+    "build:watch": "postcss src/styles/tailwind.css -o src/styles/main.css --watch",
+    "prod:build": "NODE_ENV=production npm run build:css && npm run build"
+  },
+  "cacheDirectories": [
+    ".next/cache"
+  ],
+  "dependencies": {
+    "@hookform/resolvers": "^2.9.3",
+    "@types/react": "^18.0.15",
+    "axios": "0.25.0",
+    "jsonwebtoken": "^8.5.1",
+    "next": "12.1.6",
+    "nookies": "^2.5.2",
+    "package.json": "^2.0.1",
+    "postcss-cli": "^9.1.0",
+    "pptxgenjs": "^3.10.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.33.1",
+    "react-multi-date-picker": "^3.3.0",
+    "react-time-picker": "^4.5.0",
+    "slugify": "^1.6.5",
+    "typescript": "^4.7.4",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.0",
+    "@types/node": "^18.0.6",
+    "autoprefixer": "^10.4.7",
+    "cors": "^2.8.5",
+    "eslint": "8.18.0",
+    "eslint-config-next": "12.1.6",
+    "express": "^4.18.1",
+    "postcss": "^8.4.14",
+    "tailwindcss": "^3.1.4"
+  }
+}
