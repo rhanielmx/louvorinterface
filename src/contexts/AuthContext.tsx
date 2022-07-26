@@ -18,8 +18,11 @@ type User = {
     last_name: string;
     last_accessed: string;
     role: string;
+    avatar_url: string;
+    avaiability: string;
     songs: any[];
     categories: any[];
+    playlists: any[];
 }
 
 type AuthContextType = {
