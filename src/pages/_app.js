@@ -1,8 +1,8 @@
 import '../styles/main.css';
-import dynamic from 'next/dynamic';
 import { AuthProvider } from '../contexts/AuthContext';
 import Script from "next/script";
 import Navbar from '../components/Navbar/Navbar';
+import { SessionProvider } from "next-auth/react"
 
 // const Navbar = dynamic(
 //   () => import('../components/Navbar'),
@@ -10,13 +10,13 @@ import Navbar from '../components/Navbar/Navbar';
 // )
 
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return <>
     <div className='flex flex-col h-screen bg-igreja bg-center md:bg-cover bg-local bg-green-800 bg-blend-overlay overflow-y-auto'>
-      <AuthProvider>
-        <Navbar></Navbar>
-        <Component {...pageProps} />
-      </AuthProvider>
+      <SessionProvider session={session}>
+          <Navbar></Navbar>
+          <Component {...pageProps} />
+      </SessionProvider>
       <Script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" />
       <Script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" />
     </div>

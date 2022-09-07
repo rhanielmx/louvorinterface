@@ -3,17 +3,18 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import slugify from 'slugify'
 import Multiselect from './Multiselect'
-import { useAuth } from "../contexts/AuthContext";
 import { api } from '../services/api'
+import { useSession } from 'next-auth/react'
 
 export default function LyricsForm(props) {
     const router = useRouter()
-    const { isAuthenticated } = useAuth()
+    const { data: session } = useSession()
     const [title, setTitle] = useState(props.song?.title ?? '')
     const [artist, setArtist] = useState(props.song?.artist ?? '')
     const [url, setUrl] = useState(props.song?.video_url ?? '')
     const [lyrics, setLyrics] = useState(props.song?.lyrics ?? '')
     const [selectedItems, setSelected] = useState(props.song?.categories.map(category => { return category.name }) ?? []);
+
 
     useEffect(() => {
         if (props.redirectTo) {
@@ -21,8 +22,11 @@ export default function LyricsForm(props) {
         }
     }, [props.redirectTo, router])
 
+    useEffect(() => {
+        api.defaults.headers.common['Authorization'] = `Bearer ${session?.accessToken}`
+    }, [session])
+
     //TODO - Implementar redirect do login'
-    if (!isAuthenticated) return 'faça login'
 
     async function handleConfirm() {
         let data = {
@@ -40,6 +44,7 @@ export default function LyricsForm(props) {
     }
     //TODO - Checar se o usuário está logado
     async function handleCreate(data) {
+        console.log('api', api)
         await api.post(`/handler/songs/new`, data)
             .then(res => {
                 console.log(res)

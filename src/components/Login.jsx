@@ -5,8 +5,10 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
+import { signIn } from "next-auth/react";
+
 export default function Login(props) {
-    const { signIn } = useAuth();
+    // const { signIn } = useAuth();
 
     const validationSchema = Yup.object().shape({
         username: Yup.string()
@@ -21,7 +23,12 @@ export default function Login(props) {
     const { errors } = formState;
 
     async function onSubmit(data) {
-        await signIn(data);
+        // await signIn(data);
+        await signIn('credentials',{
+            username: data.username,
+            password: data.password,
+            callbackUrl: `${window.location.origin}/teste`
+        })
 
         return false;
     }

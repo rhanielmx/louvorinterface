@@ -2,8 +2,9 @@ import Login from "../components/Login";
 import { parseCookies } from "nookies";
 import { getAPIClient } from "../services/axios";
 import Head from "next/head";
+import { getSession } from "next-auth/react";
 
-export default function LoginPage(props) {
+export default function LoginPage(props) {  
   return (
     <>
       <Head><title>Entrar</title></Head>
@@ -13,9 +14,9 @@ export default function LoginPage(props) {
 }
 
 export const getServerSideProps = async (ctx) => {
-  const { 'louvor.token': token } = parseCookies(ctx);
+  const session = await getSession(ctx);
 
-  if (token) {
+  if (session) {
     return {
       redirect: {
         destination: '/',
@@ -23,9 +24,6 @@ export const getServerSideProps = async (ctx) => {
       }
     }
   }
-
-  const apiClient = getAPIClient(ctx);
-  await apiClient.get('/admin/user').then(res => { console.log('login.success') }).catch(err => { console.log('login.error', err) })
 
   return {
     props: {}

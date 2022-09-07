@@ -2,9 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
+import { signOut } from "next-auth/react";
 
 export default function UserCard(props) {
-    const { user, signOut } = useAuth();
+    // const { user, signOut } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
 
     function handleSignOut(event) {
@@ -18,9 +19,9 @@ export default function UserCard(props) {
         <div className={`flex flex-col pb-1 mr-8 md:mr-0 border-b md:border-none hover:cursor-pointer hover:md:bg-gray-200 h-full `}>
             <div className="flex flex-row pl-3 md:pl-0 items-center h-full" onClick={() => setIsOpen(!isOpen)}>
                 <div className="flex md:pl-3.5 md:pr-[0.925rem] h-fit w-full" >
-                    <Image src={user.avatar_url} width={35} height={35} alt="Avatar do Usuário"
+                    <Image src={props.user?.image ?? 'https://gravatar.com/avatar/8aec9a741d3d00fc127210a085df99b1?s=200&d=mp&r=x'} width={35} height={35} alt="Avatar do Usuário"
                         className="rounded-full" />
-                    <p className="pl-2 pt-1.5">{user?.first_name}</p>
+                    <p className="pl-2 pt-1.5">{props.user?.name}</p>
 
                 </div>
                 <span className="text-xl mt-2 inline md:hidden">

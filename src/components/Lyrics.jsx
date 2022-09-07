@@ -161,7 +161,7 @@ export default function Lyrics(props) {
                     </div>
                 </div>
                 <div className='flex flex-col flex-auto mb-6 md:order-2 lg:w-32 md:pt-1 lg:py-14 overflow-hidden print:hidden'>
-                    <iframe className={`w-full aspect-video aolute`} src={`https://www.youtube.com/embed/${url_code}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen scrolling></iframe>
+                    <iframe className={`w-full aspect-video aolute`} src={`https://www.youtube.com/embed/${url_code}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen scrolling="true"></iframe>
                 </div>
             </div>
         </div>

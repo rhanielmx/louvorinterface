@@ -7,13 +7,15 @@ import { useRouter } from 'next/router';
 import slugify from 'slugify';
 import { SearchIcon } from './Icons';
 import Image from 'next/image';
+import { useSession, signOut } from 'next-auth/react';
 
 export default function Navbar() {
     const [active, setActive] = useState(false);
     const [searchActive, setSearchActive] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     // const [currentUser, setCurrentUser] = useState(null);
-    const { isAuthenticated, user, signOut } = useAuth();
+    // const { isAuthenticated, user, signOut } = useAuth();
+    const { data:session } = useSession()
     const router = useRouter()
 
     const handleClick = () => {
@@ -116,7 +118,7 @@ export default function Navbar() {
                         </a>
                     </Link>
 
-                    <If condition={user} fallback={<a onClick={() => { router.push('/login') }} className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold hover:bg-green-600 hover:text-white hover:cursor-pointer'>Entrar</a>}>
+                    <If condition={session?.user} fallback={<a onClick={() => { router.push('/login') }} className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold hover:bg-green-600 hover:text-white hover:cursor-pointer'>Entrar</a>}>
                         <a onClick={logout} className='lg:inline-flex lg:w-auto w-full px-3 py-2 rounded text-white font-bold  hover:bg-green-600 hover:text-white hover:cursor-pointer'>Sair</a>
                     </If>
 

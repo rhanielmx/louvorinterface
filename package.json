@@ -20,6 +20,7 @@
     "axios": "0.25.0",
     "jsonwebtoken": "^8.5.1",
     "next": "12.1.6",
+    "next-auth": "^4.10.2",
     "nookies": "^2.5.2",
     "package.json": "^2.0.1",
     "postcss-cli": "^9.1.0",

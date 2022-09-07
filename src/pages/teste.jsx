@@ -1,5 +1,13 @@
+import { getSession, useSession, signOut } from "next-auth/react"
+import { useEffect } from "react"
 
 function Teste() {
+    const { data:session,  } = useSession()
+
+    useEffect(()=>{
+        console.log('rapariga',session)
+    },[session])
+
 
     const horarios = [
         ['07:00','','Despertar','Despertar'],
@@ -16,7 +24,7 @@ function Teste() {
                             <thead className="border-b">
                                 <tr>
                                     <th colSpan={4} scope="col" className="text-lg font-medium text-gray-900 px-6 py-4 text-center">
-                                        Programação do Retiro
+                                        Programação do Retiro {session?.user.name}
                                     </th>
                                    
                                 </tr>
@@ -85,4 +93,12 @@ function Teste() {
     )
 }
 
+export const getServerSideProps = async (context) => {
+    const session = await getSession(context)
+    console.log('teste.session',session)
+    return {
+        props: {
+        }
+    }
+}   
 export default Teste

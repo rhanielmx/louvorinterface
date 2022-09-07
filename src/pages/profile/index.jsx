@@ -5,8 +5,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import Message from "../../components/Message";
 
 import dynamic from "next/dynamic";
-import { parseCookies } from "nookies";
-
+import { getSession, useSession } from "next-auth/react";
 const Profile = dynamic(() => import("../../components/Profile"), {
   // ssr: false,
   suspense: true,
@@ -14,9 +13,9 @@ const Profile = dynamic(() => import("../../components/Profile"), {
 
 
 export async function getServerSideProps(context) {
-  const { 'louvor.token': token } = parseCookies(context);
+  const session = getSession(context);
 
-  if (!token) {
+  if (!session) {
     return {
       redirect: {
         destination: '/login',
@@ -30,8 +29,7 @@ export async function getServerSideProps(context) {
 }
 
 export default function ProfilePage() {
-  const router = useRouter();
-  const { isAuthenticated, user } = useAuth();
+  const { data:session, status } = useSession();
   const [saved, setSaved] = useState(true);
 
   useEffect(() => {
@@ -77,7 +75,7 @@ export default function ProfilePage() {
   return (
     <div className="h-screen">
       <Suspense fallback={<Message content="Carregando..." />}>
-        {isAuthenticated && <Profile save={setSaved} />}
+        {status !== 'loading' && <Profile user={session?.user} save={setSaved} />}
       </Suspense>
     </div>
   )

@@ -1,11 +1,10 @@
-// import { getServerSideProps } from "../pages/login";
 import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { useAuth } from "../contexts/AuthContext";
+// import { useAuth } from "../contexts/AuthContext";
 import DatePicker from "react-multi-date-picker";
 import DatePanel from "react-multi-date-picker/plugins/date_panel"
 // import TimePicker from "react-multi-date-picker/plugins/time_picker";
-import TimePicker from 'react-time-picker/dist/entry.nostyle'
+// import TimePicker from 'react-time-picker/dist/entry.nostyle'
 
 import "react-multi-date-picker/styles/colors/green.css"
 import Icon from "react-multi-date-picker/components/icon"
@@ -15,10 +14,10 @@ import DateCard from "./DateCard";
 import AvaiabilityPanel from "./AvaiabilityPanel";
 
 const Profile = (props) => {
-    const { user } = useAuth();
+    const user = props.user
     const { router } = useRouter();
     const [value, setValue] = useState(new Date());
-    const [selected, setSelected] = useState(user.availability.map(ts => { return new Date(ts) }) ?? []);
+    const [selected, setSelected] = useState(user?.availability?.map(ts => { return new Date(ts) }) ?? []);
     const [radio, setRadio] = useState({});
 
     const datePickerRef = useRef();
@@ -76,13 +75,13 @@ const Profile = (props) => {
         <div className="flex flex-row h-screen text-center">
             <div className="bg-white w-full lg:w-11/12 lg:mx-auto lg:my-12 py-8 md:py-12 lg:rounded-xl">
                 <div className="flex flex-row h-fit justify-center">
-                    <Image src={user.avatar_url} alt="Avatar do Usuário" width={200} height={200} className="rounded-full" />
+                    <Image src={user?.image} alt="Avatar do Usuário" width={200} height={200} className="rounded-full" />
                 </div>
-                <p className="pt-4 text-2xl font-medium">{user.first_name} {user.last_name}</p>
+                <p className="pt-4 text-2xl font-medium">{user?.name} {user?.last_name}</p>
                 <p className="text-red-500 text-2xl font-bold">Ainda em Implementação</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 mt-4">
                     <div>
-                        <div>Cargos: {user.role}</div>
+                        <div>Cargos: {user?.role}</div>
                         <div className="flex flex-row flex-wrap justify-around md:justify-between px-4 md:px-8 items-center">
 
                             <DatePicker
@@ -133,7 +132,7 @@ const Profile = (props) => {
                         </div>
                     </div>
                     <div>
-                        Repertórios: {user.playlists}
+                        Repertórios: {user?.playlists}
                         {console.log(radio)}
                         {Object.keys(radio).map(key => {
                             return <div key={key}>{key} - {radio[key]}</div>
